@@ -40,9 +40,9 @@ export function LoginForm({
 
   const isLogin = formMode === "login";
 
-  // useEffect(() => {
-  //   router.replace(isLogin ? "/login" : "/register");
-  // }, [isLogin]);
+  useEffect(() => {
+    router.replace(isLogin ? "/login" : "/register");
+  }, [isLogin]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

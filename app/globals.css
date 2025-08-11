@@ -76,7 +76,20 @@
   --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
   --sidebar-border: oklch(0.929 0.013 255.508);
   --sidebar-ring: oklch(0.704 0.04 256.788);
+  --brand-color-default: rgb(0, 178, 177);
+  --brand-color-light: rgb(153, 224, 222);
+  --brand-color-dark: rgb(55, 114, 123);
 }
+
+/* For navbar border color */
+/* .data-selected\:border-brand-color-dark[data-selected] {
+  border-color: var(--brand-color-dark) !important;
+} */
+
+/* For navbar text color */
+/* .data-selected\:text-brand-color-dark[data-selected] {
+  color: var(--brand-color-dark) !important;
+} */
 
 .dark {
   --background: oklch(0.129 0.042 264.695);
@@ -116,6 +129,7 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
