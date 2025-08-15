@@ -70,7 +70,7 @@ export const navigation = {
     },
   ],
   pages: [
-    { name: "Sale", href: "#" },
-    { name: "Stores", href: "#" },
+    { name: "Hot Deals", href: "#" },
+    { name: "Explore", href: "#" },
   ],
 };

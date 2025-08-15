@@ -10,11 +10,14 @@ import React, {
 import { jwtDecode } from "jwt-decode";
 import api from "./api";
 import { ACCESS_TOKEN, REFRESH_TOKEN, GOOGLE_ACCESS_TOKEN } from "@/lib/tokens";
+import { useUserProfileStore } from "@/stores/userProfileStore";
+
+const { fetchUserProfile } = useUserProfileStore.getState();
 
 interface DecodedUser {
   username: string;
   exp: number; // expiration time in seconds
-  //   iat: number; // issued at (optional)
+  // iat: number; // issued at (optional)
   [key: string]: any; // for other fields like `id`, `email` etc.
 }
 
@@ -59,6 +62,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           await refreshToken();
         } else {
           // Token is valid
+          console.log(jwtDecode(token));
           setIsAuthorized(true);
           setUser(decoded);
         }
@@ -119,6 +123,21 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
+  // Get username and email
+  // const fetchUserProfile = async () => {
+  //   try {
+  //     const res = await api.get("/accounts/auth/user/");
+  //     setUser({
+  //       username: res.data.username,
+  //       email: res.data.email,
+  //       ...res.data,
+  //     });
+  //     console.log("username: " + user?.username);
+  //   } catch (error) {
+  //     console.error("Failed to fetch user profile", error);
+  //   }
+  // };
+
   // Login method
   const login = async (credentials: {
     username?: string;
@@ -126,8 +145,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     google_token?: string;
   }): Promise<boolean> => {
     try {
-      //   console.log("Attempting login with:", credentials);
-
       let res;
       if (credentials.google_token) {
         // Google login
@@ -139,14 +156,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         res = await api.post("/accounts/token/", credentials);
       }
 
-      //   console.log("Login response:", res.data);
-
       localStorage.setItem(ACCESS_TOKEN, res.data.access);
 
       // For regular login, also store refresh token
       if (res.data.refresh) {
         localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
       }
+
+      // Fetch profile
+      await fetchUserProfile();
 
       // Trigger auth check
       await checkAuth();

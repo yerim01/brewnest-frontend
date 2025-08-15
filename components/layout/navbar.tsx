@@ -20,12 +20,17 @@ import {
   MagnifyingGlassIcon,
   ShoppingBagIcon,
   XMarkIcon,
+  UserCircleIcon,
 } from "@heroicons/react/24/outline";
 
 import { navigation } from "@/components/layout/navigation";
+import { useAuth } from "@/lib/api/auth";
+import UserDropDown from "./user-dropdown";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const { isAuthorized } = useAuth();
+  const { logout } = useAuth();
 
   return (
     <div className="bg-white">
@@ -149,25 +154,41 @@ export default function Navbar() {
                 </div>
               ))}
             </div>
-
-            <div className="space-y-6 border-t border-gray-200 px-4 py-6">
-              <div className="flow-root">
+            {isAuthorized ? (
+              <div className="space-y-6 border-t border-gray-200 px-4 py-6">
                 <a
                   href="#"
                   className="-m-2 block p-2 font-medium text-gray-900"
                 >
-                  Sign in
+                  <UserCircleIcon aria-hidden="true" className="size-6" />
                 </a>
-              </div>
-              <div className="flow-root">
-                <a
-                  href="#"
-                  className="-m-2 block p-2 font-medium text-gray-900"
+                <button
+                  onClick={logout}
+                  className="-m-2 block p-2 mt-2 font-medium text-gray-900 underline hover:text-gray-500 cursor-pointer"
                 >
-                  Create account
-                </a>
+                  Sign out
+                </button>
               </div>
-            </div>
+            ) : (
+              <div className="space-y-6 border-t border-gray-200 px-4 py-6">
+                <div className="flow-root">
+                  <a
+                    href="#"
+                    className="-m-2 block p-2 font-medium text-gray-900"
+                  >
+                    Sign in
+                  </a>
+                </div>
+                <div className="flow-root">
+                  <a
+                    href="#"
+                    className="-m-2 block p-2 font-medium text-gray-900"
+                  >
+                    Create account
+                  </a>
+                </div>
+              </div>
+            )}
           </DialogPanel>
         </div>
       </Dialog>
@@ -338,33 +359,43 @@ export default function Navbar() {
                 </div>
               </PopoverGroup>
 
-              <div className="ml-auto flex items-center">
-                <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                  <a
-                    href="/login"
-                    className="text-sm font-medium text-gray-700 hover:text-gray-800"
-                  >
-                    Sign in
-                  </a>
-                  <span aria-hidden="true" className="h-6 w-px bg-gray-200" />
-                  <a
-                    href="/register"
-                    className="text-sm font-medium text-gray-700 hover:text-gray-800"
-                  >
-                    Create account
-                  </a>
-                </div>
+              {/* Search */}
+              <div className="ml-auto flex">
+                <a href="#" className="p-2 text-gray-400 hover:text-gray-500">
+                  <span className="sr-only">Search</span>
+                  <MagnifyingGlassIcon aria-hidden="true" className="size-6" />
+                </a>
+              </div>
 
-                {/* Search */}
-                <div className="flex lg:ml-6">
-                  <a href="#" className="p-2 text-gray-400 hover:text-gray-500">
-                    <span className="sr-only">Search</span>
-                    <MagnifyingGlassIcon
-                      aria-hidden="true"
-                      className="size-6"
-                    />
-                  </a>
-                </div>
+              {/* User */}
+              <div className="flex items-center lg:ml-6">
+                {isAuthorized ? (
+                  <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end">
+                    <a
+                      href="#"
+                      className="p-2 text-gray-400 hover:text-gray-500"
+                    >
+                      <UserCircleIcon aria-hidden="true" className="size-6" />
+                    </a>
+                    <UserDropDown />
+                  </div>
+                ) : (
+                  <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
+                    <a
+                      href="/login"
+                      className="text-sm font-medium text-gray-700 hover:text-gray-800"
+                    >
+                      Sign in
+                    </a>
+                    <span aria-hidden="true" className="h-6 w-px bg-gray-200" />
+                    <a
+                      href="/register"
+                      className="text-sm font-medium text-gray-700 hover:text-gray-800"
+                    >
+                      Create account
+                    </a>
+                  </div>
+                )}
 
                 {/* Cart */}
                 <div className="ml-4 flow-root lg:ml-6">

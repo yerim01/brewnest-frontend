@@ -165,7 +165,7 @@ export function LoginForm({
                 <div className="text-red-500 text-sm text-center">{error}</div>
               )}
               {success && (
-                <div className="text-green-500 text-sm text-center">
+                <div className="text-[var(--brand-color-default)] text-sm text-center">
                   {success}
                 </div>
               )}
@@ -218,7 +218,7 @@ export function LoginForm({
                     <button
                       type="button"
                       onClick={() => setFormMode("register")}
-                      className="underline underline-offset-4"
+                      className="underline underline-offset-4 cursor-pointer"
                     >
                       Sign up
                     </button>
@@ -229,7 +229,7 @@ export function LoginForm({
                     <button
                       type="button"
                       onClick={() => setFormMode("login")}
-                      className="underline underline-offset-4"
+                      className="underline underline-offset-4 cursor-pointer"
                     >
                       Login
                     </button>
