@@ -21,7 +21,7 @@ export default function UserDropDown() {
         <ChevronUpDownIcon className="text-gray-400 hover:text-gray-500 size-6 cursor-pointer" />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-70" align="end" alignOffset={5}>
-        <DropdownMenuLabel>
+        <DropdownMenuLabel className="text-l">
           {profile?.email ? profile.email : profile?.username}
         </DropdownMenuLabel>
         <DropdownMenuSeparator />

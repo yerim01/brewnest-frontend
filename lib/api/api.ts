@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { ACCESS_TOKEN } from '@/lib/tokens';
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8001';
+const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
 const api = axios.create({
   baseURL: apiUrl,

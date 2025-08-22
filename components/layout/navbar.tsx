@@ -286,7 +286,7 @@ export default function Navbar() {
                                   <div key={section.name}>
                                     {section.href ? (
                                       <a
-                                        href={section.href}
+                                        href={`/categories/${category.id}`}
                                         className="font-medium hover:text-gray-800"
                                       >
                                         {section.name}
@@ -310,7 +310,7 @@ export default function Navbar() {
                                         {section.items?.map((item) => (
                                           <li key={item.name} className="flex">
                                             <a
-                                              href={item.href}
+                                              href={`/categories/${category.id}/${item.slug}`}
                                               className="hover:text-gray-800"
                                             >
                                               {item.name}

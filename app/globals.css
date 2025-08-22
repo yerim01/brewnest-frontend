@@ -81,16 +81,6 @@
   --brand-color-dark: rgb(55, 114, 123);
 }
 
-/* For navbar border color */
-/* .data-selected\:border-brand-color-dark[data-selected] {
-  border-color: var(--brand-color-dark) !important;
-} */
-
-/* For navbar text color */
-/* .data-selected\:text-brand-color-dark[data-selected] {
-  color: var(--brand-color-dark) !important;
-} */
-
 .dark {
   --background: oklch(0.129 0.042 264.695);
   --foreground: oklch(0.984 0.003 247.858);
