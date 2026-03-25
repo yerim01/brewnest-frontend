@@ -90,7 +90,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const refreshToken = async () => {
     const refreshToken = localStorage.getItem(REFRESH_TOKEN);
     try {
-      const res = await api.post("/accounts/token/refresh/", {
+      const res = await api.post("/api/accounts/token/refresh/", {
         refresh: refreshToken,
       });
 
@@ -113,7 +113,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     googleAccessToken: string
   ): Promise<boolean> => {
     try {
-      const res = await api.post("/accounts/google/validate_token/", {
+      const res = await api.post("/api/accounts/google/validate_token/", {
         access_token: googleAccessToken,
       });
       return res.data.valid;
@@ -126,7 +126,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   // Get username and email
   // const fetchUserProfile = async () => {
   //   try {
-  //     const res = await api.get("/accounts/auth/user/");
+  //     const res = await api.get("/api/accounts/auth/user/");
   //     setUser({
   //       username: res.data.username,
   //       email: res.data.email,
@@ -148,12 +148,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       let res;
       if (credentials.google_token) {
         // Google login
-        res = await api.post("/accounts/google/validate_token/", {
+        res = await api.post("/api/accounts/google/validate_token/", {
           access_token: credentials.google_token,
         });
       } else {
         // Regular login
-        res = await api.post("/accounts/token/", credentials);
+        res = await api.post("/api/accounts/token/", credentials);
       }
 
       localStorage.setItem(ACCESS_TOKEN, res.data.access);

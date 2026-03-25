@@ -15,7 +15,7 @@ export const useUserProfileStore = create<UserProfileState>((set) => ({
     profile: null,
     fetchUserProfile: async () => {
     try {
-      const res = await api.get("http://localhost:8000/accounts/auth/user/");
+      const res = await api.get("http://localhost:8001/api/accounts/auth/user/");
       set({ profile: res.data });
     } catch (error) {
       console.error("Failed to fetch user profile", error);

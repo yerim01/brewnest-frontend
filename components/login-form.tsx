@@ -16,6 +16,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 import api from "@/lib/api/api";
+import { GOOGLE_LOGIN_URL } from "@/lib/api/api";
 import { useAuth } from "@/lib/api/auth";
 import { GOOGLE_ACCESS_TOKEN } from "@/lib/tokens";
 
@@ -60,7 +61,7 @@ export function LoginForm({
           setError("Login failed. Please check your credentials.");
         }
       } else {
-        const res = await api.post("/accounts/user/register/", {
+        const res = await api.post("/api/accounts/user/register/", {
           username,
           password,
         });
@@ -90,7 +91,7 @@ export function LoginForm({
   };
 
   const handleGoogleLogin = () => {
-    window.location.href = "http://localhost:8000/google-auth/google/login/";
+    window.location.href = GOOGLE_LOGIN_URL;
   };
 
   useEffect(() => {
@@ -207,8 +208,8 @@ export function LoginForm({
                       ? "Logging in..."
                       : "Registering..."
                     : isLogin
-                    ? "Login"
-                    : "Register"}
+                      ? "Login"
+                      : "Register"}
                 </Button>
               </div>
               <div className="text-center text-sm">

@@ -193,7 +193,7 @@ export default function Navbar() {
         </div>
       </Dialog>
 
-      <header className="relative bg-white">
+      <header className="bg-white sticky top-0 z-50">
         <p className="flex h-10 items-center justify-center bg-[var(--brand-color-light)] px-4 text-sm font-medium text-foreground sm:px-6 lg:px-8">
           Free Shipping, Every Order, Every Time.
         </p>

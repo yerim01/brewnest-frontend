@@ -36,7 +36,7 @@ export interface Product {
 export const getCategoriesByGroupSlug = async (
     groupSlug: string
 ): Promise<Product []> => {
-    const response = await api.get<Product []>("/store/products/", {
+    const response = await api.get<Product []>("/api/store/products/", {
         params: { group_slug: groupSlug},
     });
     return response.data
