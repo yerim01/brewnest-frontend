@@ -110,7 +110,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   // Validate Google token
   const validateGoogleToken = async (
-    googleAccessToken: string
+    googleAccessToken: string,
   ): Promise<boolean> => {
     try {
       const res = await api.post("/api/accounts/google/validate_token/", {
@@ -168,6 +168,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
       // Trigger auth check
       await checkAuth();
+
       return true;
     } catch (error) {
       console.error("Login failed", error);
@@ -190,9 +191,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     checkAuth();
 
     // Set up an interval to check and refresh token periodically
-    const interval = setInterval(() => {
-      checkAuth();
-    }, 5 * 60 * 1000); // Check every 5 minutes
+    const interval = setInterval(
+      () => {
+        checkAuth();
+      },
+      5 * 60 * 1000,
+    ); // Check every 5 minutes
 
     return () => clearInterval(interval);
   }, []);
