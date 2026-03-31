@@ -18,13 +18,25 @@ interface DecodedUser {
   username: string;
   exp: number; // expiration time in seconds
   // iat: number; // issued at (optional)
-  [key: string]: any; // for other fields like `id`, `email` etc.
+  [key: string]: unknown; // for other fields like `id`, `email` etc.
 }
+
+type LoginCredentials =
+  | {
+      username: string;
+      password: string;
+      google_token?: never;
+    }
+  | {
+      username?: never;
+      password?: never;
+      google_token: string;
+    };
 
 interface AuthContextType {
   isAuthorized: boolean;
   user: DecodedUser | null;
-  login: (credentials: any) => Promise<boolean>;
+  login: (credentials: LoginCredentials) => Promise<boolean>;
   logout: () => void;
   refreshToken: () => Promise<boolean>;
 }
@@ -68,6 +80,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         }
       } catch (error) {
         // Invalid token
+        console.error("Invalide token", error);
         logout();
       }
     } else if (googleAccessToken) {
@@ -79,6 +92,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           logout();
         }
       } catch (error) {
+        console.error("Invalide google token", error);
         logout();
       }
     } else {

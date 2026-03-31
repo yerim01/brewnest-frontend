@@ -16,7 +16,7 @@ export default function ProtectedRoute({
     if (!isAuthorized) {
       router.push("/login");
     }
-  }, [isAuthorized]);
+  }, [isAuthorized, router]);
 
   if (!isAuthorized) {
     return <div>Loading...</div>;

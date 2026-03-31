@@ -5,12 +5,13 @@ import { useEffect, useState } from "react";
 import { getCategoriesByGroupSlug, Product } from "@/lib/api/products";
 import { Skeleton } from "@/components/ui/skeleton";
 import CategoryHeader from "@/app/(store)/_components/category-header";
-import { Lora } from "next/font/google";
+import Image from "next/image";
+// import { Lora } from "next/font/google";
 
-const lora = Lora({
-  weight: "400",
-  subsets: ["latin"],
-});
+// const lora = Lora({
+//   weight: "400",
+//   subsets: ["latin"],
+// });
 
 export default function CategoryPage() {
   const { categoryId } = useParams();
@@ -60,9 +61,11 @@ export default function CategoryPage() {
               ))
             : products.map((product) => (
                 <div key={product.id} className="group relative">
-                  <img
+                  <Image
                     alt="product_img"
                     src={product.image}
+                    width={800}
+                    height={800}
                     className="aspect-square w-full rounded-md bg-gray-200 object-cover group-hover:opacity-75 lg:aspect-auto lg:h-80"
                   />
                   <div className="mt-4 flex justify-between">

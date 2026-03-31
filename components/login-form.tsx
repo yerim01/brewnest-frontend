@@ -19,6 +19,7 @@ import api from "@/lib/api/api";
 import { GOOGLE_LOGIN_URL } from "@/lib/api/api";
 import { useAuth } from "@/lib/api/auth";
 import { GOOGLE_ACCESS_TOKEN } from "@/lib/tokens";
+import axios from "axios";
 
 interface LoginFormProps extends React.ComponentProps<"div"> {
   mode?: "login" | "register";
@@ -61,7 +62,7 @@ export function LoginForm({
           setError("Login failed. Please check your credentials.");
         }
       } else {
-        const res = await api.post("/api/accounts/user/register/", {
+        await api.post("/api/accounts/user/register/", {
           username,
           password,
         });
@@ -69,19 +70,23 @@ export function LoginForm({
         setSuccess("Registration successful. Redirecting to login...");
         setTimeout(() => setFormMode("login"), 1500);
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error(error);
 
-      if (error.response) {
-        if (error.response.status === 401) {
-          setError("Invalid credentials");
-        } else if (error.response.status === 400) {
-          setError("Username already exists");
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+          if (error.response.status === 401) {
+            setError("Invalid credentials");
+          } else if (error.response.status === 400) {
+            setError("Username already exists");
+          } else {
+            setError("Something went wrong. Please try again.");
+          }
+        } else if (error.request) {
+          setError("Network error. Please check your internet connection.");
         } else {
           setError("Something went wrong. Please try again.");
         }
-      } else if (error.request) {
-        setError("Network error. Please check your internet connection.");
       } else {
         setError("Something went wrong. Please try again.");
       }
