@@ -6,6 +6,7 @@ import React, {
   useContext,
   useEffect,
   ReactNode,
+  useCallback,
 } from "react";
 import { jwtDecode } from "jwt-decode";
 import api from "./api";
@@ -59,7 +60,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<DecodedUser | null>(null);
 
   // Function to check and validate token
-  const checkAuth = async () => {
+  const checkAuth = useCallback(async () => {
     const token = localStorage.getItem(ACCESS_TOKEN);
     const googleAccessToken = localStorage.getItem(GOOGLE_ACCESS_TOKEN);
 
@@ -98,7 +99,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     } else {
       logout();
     }
-  };
+  }, []);
 
   // Refresh token method
   const refreshToken = async () => {
@@ -213,7 +214,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     ); // Check every 5 minutes
 
     return () => clearInterval(interval);
-  }, []);
+  }, [checkAuth]);
 
   return (
     <AuthContext.Provider
